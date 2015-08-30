@@ -21,7 +21,7 @@ static ScrollLayer *s_scroll_layer;
 
 static BitmapLayer *s_icon_layer, *s_fondo_layer;
 int i_parada, i_total_lineas;
-char i_lineas[300], string_parada[11];
+char i_lineas[300], string_parada[11], string_parada_total[300];
 
 static GBitmap *s_icon_bitmap;
 
@@ -76,11 +76,7 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, bitmap_layer_get_layer(s_icon_layer));
   // FIN DE LA CAPA
   
-  for (int v=0;v<15;v++)
-      {
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "Para parada %i, tiempo1 vale %i y tiempo2, vale %i", v, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
 
-      }
       
 }
 
@@ -102,8 +98,18 @@ void dialog_message_window_push(int parada, char lineas[200], int total_lineas) 
     memset(&i_lineas[0], 0, sizeof(i_lineas));
     memset(&string_parada[0], 0, sizeof(string_parada));
 
-    strcat(i_lineas, lineas);
+    for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
+      {
+        memset(&string_parada_total[0], 0, sizeof(string_parada_total));
+        snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: %i y %i\n", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
+
+        //APP_LOG(APP_LOG_LEVEL_DEBUG, "Para parada %c, tiempo1 vale %i y tiempo2, vale %i", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
+        strcat(i_lineas, string_parada_total);
+
+      }
+    //strcat(i_lineas, lineas);
     snprintf(string_parada, sizeof(string_parada), "Parada %d", parada);
+    //APP_LOG(APP_LOG_LEVEL_DEBUG, "Total: %s", i_lineas);
 
     s_main_window = window_create();
     window_set_background_color(s_main_window, COLOR_CUERPO);

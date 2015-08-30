@@ -493,13 +493,12 @@ function ParadaCercana(lat, long)
 function ResuelveParada(parada, lineas) {
     lineas_utiles = 0;
     
-  for (i=0;i<14;i++)
+  for (i=0;i<13+1;i++)
       {
         valores_tiempo[i] = [];
         valores_tiempo[i][0] = 0;
         valores_tiempo[i][1] = 0;
       }
-    console.log("Esto he hecho:" + valores_tiempo);
   
     for (i = 0; i < lineas.length; i++)
       if (lineas[i] != "0") 
@@ -528,25 +527,25 @@ function comprueba_envio(linea, lineas, tiempo1, tiempo2)
       {
         dict_nuevo = {
           "KEY_TIPO": 0,
-          "KEY_LINEA_A_TIEMPO1": valores_tiempo[0][0], "KEY_LINEA_A_TIEMPO2": valores_tiempo[0][1],  
-          "KEY_LINEA_B_TIEMPO1": valores_tiempo[1][0], "KEY_LINEA_B_TIEMPO2": valores_tiempo[1][1],  
-          "KEY_LINEA_C_TIEMPO1": valores_tiempo[2][0], "KEY_LINEA_C_TIEMPO2": valores_tiempo[2][1],  
-          "KEY_LINEA_D_TIEMPO1": valores_tiempo[3][0], "KEY_LINEA_D_TIEMPO2": valores_tiempo[3][1],  
-          "KEY_LINEA_E_TIEMPO1": valores_tiempo[4][0], "KEY_LINEA_E_TIEMPO2": valores_tiempo[4][1],  
-          "KEY_LINEA_F_TIEMPO1": valores_tiempo[5][0], "KEY_LINEA_F_TIEMPO2": valores_tiempo[5][1],  
-          "KEY_LINEA_G_TIEMPO1": valores_tiempo[6][0], "KEY_LINEA_G_TIEMPO2": valores_tiempo[6][1],  
-          "KEY_LINEA_H_TIEMPO1": valores_tiempo[7][0], "KEY_LINEA_H_TIEMPO2": valores_tiempo[7][1],  
-          "KEY_LINEA_I_TIEMPO1": valores_tiempo[8][0], "KEY_LINEA_I_TIEMPO2": valores_tiempo[8][1],  
-          "KEY_LINEA_J_TIEMPO1": valores_tiempo[9][0], "KEY_LINEA_J_TIEMPO2": valores_tiempo[9][1],  
-          "KEY_LINEA_K_TIEMPO1": valores_tiempo[10][0], "KEY_LINEA_K_TIEMPO2": valores_tiempo[10][1],  
-          "KEY_LINEA_L_TIEMPO1": valores_tiempo[11][0], "KEY_LINEA_L_TIEMPO2": valores_tiempo[11][1],  
-          "KEY_LINEA_R1_TIEMPO1": valores_tiempo[12][0], "KEY_LINEA_R1_TIEMPO2": valores_tiempo[12][1],  
-          "KEY_LINEA_R2_TIEMPO1": valores_tiempo[13][0], "KEY_LINEA_R2_TIEMPO2": valores_tiempo[13][1]
+          "KEY_LINEA_A_TIEMPO1": Number(valores_tiempo[0][1]), "KEY_LINEA_A_TIEMPO2": Number(valores_tiempo[0][1]),  
+          "KEY_LINEA_B_TIEMPO1": Number(valores_tiempo[1][0]), "KEY_LINEA_B_TIEMPO2": Number(valores_tiempo[1][1]),  
+          "KEY_LINEA_C_TIEMPO1": Number(valores_tiempo[2][0]), "KEY_LINEA_C_TIEMPO2": Number(valores_tiempo[2][1]),  
+          "KEY_LINEA_D_TIEMPO1": Number(valores_tiempo[3][0]), "KEY_LINEA_D_TIEMPO2": Number(valores_tiempo[3][1]),  
+          "KEY_LINEA_E_TIEMPO1": Number(valores_tiempo[4][0]), "KEY_LINEA_E_TIEMPO2": Number(valores_tiempo[4][1]),  
+          "KEY_LINEA_F_TIEMPO1": Number(valores_tiempo[5][0]), "KEY_LINEA_F_TIEMPO2": Number(valores_tiempo[5][1]),  
+          "KEY_LINEA_G_TIEMPO1": Number(valores_tiempo[6][0]), "KEY_LINEA_G_TIEMPO2": Number(valores_tiempo[6][1]),  
+          "KEY_LINEA_H_TIEMPO1": Number(valores_tiempo[7][0]), "KEY_LINEA_H_TIEMPO2": Number(valores_tiempo[7][1]),  
+          "KEY_LINEA_I_TIEMPO1": Number(valores_tiempo[8][0]), "KEY_LINEA_I_TIEMPO2": Number(valores_tiempo[8][1]),  
+          "KEY_LINEA_J_TIEMPO1": Number(valores_tiempo[9][0]), "KEY_LINEA_J_TIEMPO2": Number(valores_tiempo[9][1]),  
+          "KEY_LINEA_K_TIEMPO1": Number(valores_tiempo[10][0]), "KEY_LINEA_K_TIEMPO2": Number(valores_tiempo[10][1]),  
+          "KEY_LINEA_L_TIEMPO1": Number(valores_tiempo[11][0]), "KEY_LINEA_L_TIEMPO2": Number(valores_tiempo[11][1]),  
+          "KEY_LINEA_R1_TIEMPO1": Number(valores_tiempo[12][0]), "KEY_LINEA_R1_TIEMPO2": Number(valores_tiempo[12][1]),  
+          "KEY_LINEA_R2_TIEMPO1": Number(valores_tiempo[13][0]), "KEY_LINEA_R2_TIEMPO2": Number(valores_tiempo[13][1])
 
          };
          
       //console.log("Mensaje enviados al pebble:" + dict_nuevo);
-        //console.log("Al final he sacado esto:" + valores_tiempo);
+      console.log("Al final he sacado esto:" + valores_tiempo);
       Pebble.sendAppMessage(dict_nuevo);   
       }
   }

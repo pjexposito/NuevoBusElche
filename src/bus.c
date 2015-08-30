@@ -139,13 +139,13 @@ static void in_received_handler(DictionaryIterator *iter, void *context)
   else
   {  
     //APP_LOG(APP_LOG_LEVEL_DEBUG, "Acabo de recibir datos (pebble). Retorno: %s", tiempo_retorno);
-    for (int v=0;v<13;v++)
+    for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
       {
         Tuple *t_tiempo1 = dict_find(iter, v*2);
         Tuple *t_tiempo2 = dict_find(iter, (v*2)+1);
 
-        valores_parada[v].tiempo1 = t_tiempo1->value->uint32;
-        valores_parada[v].tiempo2 = t_tiempo2->value->uint32;
+        valores_parada[v].tiempo1 = t_tiempo1->value->int8;
+        valores_parada[v].tiempo2 = t_tiempo2->value->int8;
       }
       posicion=0;
       layer_mark_dirty(marcador);
@@ -153,6 +153,7 @@ static void in_received_handler(DictionaryIterator *iter, void *context)
       cargando = 0;
       vibes_short_pulse();
       //dialog_message_window_push(numero_parada(), devuelve_lineasxparada(numero_parada()));
+
       dialog_message_window_push(numero_parada(), texto, 4);
       pinta_nombredeparada();
       action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, play_bitmap);

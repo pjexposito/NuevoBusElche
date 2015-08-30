@@ -14,8 +14,6 @@
 #define LINEA_L 11
 #define LINEA_R1 12
 #define LINEA_R2 13
-#define LINEA_R3 14
-#define LINEA_CN 15
   
 // Valor por defecto de el número de parada y la linea
 #define NUM_DEFAULT 0
@@ -27,6 +25,8 @@
 #define FAV3_PKEY 4 
 #define FAV4_PKEY 5  
 #define FAV5_PKEY 6  
+  
+#define TOTAL_KEY_PARADAS 13
 
 struct estructura_bus {
     char linea;//Linea. Si es 0, se debe descartar
