@@ -1,0 +1,91 @@
+{
+    "appKeys": {
+        "KEY_LINEAS": 32,
+        "KEY_LINEA_A_TIEMPO1": 0,
+        "KEY_LINEA_A_TIEMPO2": 1,
+        "KEY_LINEA_B_TIEMPO1": 2,
+        "KEY_LINEA_B_TIEMPO2": 3,
+        "KEY_LINEA_C_TIEMPO1": 4,
+        "KEY_LINEA_C_TIEMPO2": 5,
+        "KEY_LINEA_D_TIEMPO1": 6,
+        "KEY_LINEA_D_TIEMPO2": 7,
+        "KEY_LINEA_E_TIEMPO1": 8,
+        "KEY_LINEA_E_TIEMPO2": 9,
+        "KEY_LINEA_F_TIEMPO1": 10,
+        "KEY_LINEA_F_TIEMPO2": 11,
+        "KEY_LINEA_G_TIEMPO1": 12,
+        "KEY_LINEA_G_TIEMPO2": 13,
+        "KEY_LINEA_H_TIEMPO1": 14,
+        "KEY_LINEA_H_TIEMPO2": 15,
+        "KEY_LINEA_I_TIEMPO1": 16,
+        "KEY_LINEA_I_TIEMPO2": 17,
+        "KEY_LINEA_J_TIEMPO1": 18,
+        "KEY_LINEA_J_TIEMPO2": 19,
+        "KEY_LINEA_K_TIEMPO1": 20,
+        "KEY_LINEA_K_TIEMPO2": 21,
+        "KEY_LINEA_L_TIEMPO1": 22,
+        "KEY_LINEA_L_TIEMPO2": 23,
+        "KEY_LINEA_R1_TIEMPO1": 24,
+        "KEY_LINEA_R1_TIEMPO2": 25,
+        "KEY_LINEA_R2_TIEMPO1": 26,
+        "KEY_LINEA_R2_TIEMPO2": 27,
+        "KEY_PARADAS": 31,
+        "KEY_TIPO": 30
+    },
+    "capabilities": [
+        "location"
+    ],
+    "companyName": "pjexposito@gmail.com",
+    "longName": "Nuevo BusElche",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/pulsar.png",
+                "name": "ICONO_PULSAR",
+                "type": "png-trans"
+            },
+            {
+                "file": "images/play.png",
+                "name": "ICONO_PLAY",
+                "type": "png-trans"
+            },
+            {
+                "file": "images/buscar.png",
+                "name": "ICONO_BUSCAR",
+                "type": "png-trans"
+            },
+            {
+                "file": "images/arriba.png",
+                "name": "ICONO_ARRIBA",
+                "type": "png-trans"
+            },
+            {
+                "file": "images/abajo.png",
+                "name": "ICONO_ABAJO",
+                "type": "png-trans"
+            },
+            {
+                "file": "images/icono_inv.png",
+                "name": "IMAGEN_BUS_INV",
+                "type": "png"
+            },
+            {
+                "file": "data/struct.bin",
+                "name": "RECURSO_BUS",
+                "type": "raw"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Nuevo BusElche",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
+    "uuid": "20e4de15-7e53-49f1-b147-d3515c33373b",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
