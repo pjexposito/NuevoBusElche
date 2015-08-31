@@ -21,7 +21,7 @@ static ScrollLayer *s_scroll_layer;
 
 static BitmapLayer *s_icon_layer, *s_fondo_layer;
 int i_parada, i_total_lineas;
-char i_lineas[300], string_parada[11], string_parada_total[300];
+char i_lineas[300], string_parada[11], string_parada_total[30], string_parada_total2[15];
 
 static GBitmap *s_icon_bitmap;
 
@@ -100,14 +100,28 @@ void dialog_message_window_push(int parada, char lineas[200], int total_lineas) 
 
     for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
       {
-        if ((valores_parada[v].tiempo1!=0) && (valores_parada[v].tiempo2!=0))
-        {
+        if ((valores_parada[v].tiempo1==98) && (valores_parada[v].tiempo2==98))
+          {
+            memset(&string_parada_total[0], 0, sizeof(string_parada_total));
+            snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: Sin autobuses.\n", v+65);
+            strcat(i_lineas, string_parada_total); 
+          }        
+        else if ((valores_parada[v].tiempo1!=0) && (valores_parada[v].tiempo2!=0))
+          {
           memset(&string_parada_total[0], 0, sizeof(string_parada_total));
-          snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: %i y %i\n", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
-
+          snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: %i", v+65, valores_parada[v].tiempo1);
           //APP_LOG(APP_LOG_LEVEL_DEBUG, "Para parada %c, tiempo1 vale %i y tiempo2, vale %i", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
           strcat(i_lineas, string_parada_total);
-        }
+          if (valores_parada[v].tiempo2>0)
+            {
+            memset(&string_parada_total2[0], 0, sizeof(string_parada_total2));
+            snprintf(string_parada_total2, sizeof(string_parada_total2), " y %i", valores_parada[v].tiempo2);
+            strcat(i_lineas, string_parada_total2);
+            APP_LOG(APP_LOG_LEVEL_DEBUG, "Añado %s", string_parada_total2);
+            }
+            strcat(i_lineas, "\n");
+          }
+
       }
     //strcat(i_lineas, lineas);
     snprintf(string_parada, sizeof(string_parada), "Parada %d", parada);
