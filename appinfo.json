@@ -30,6 +30,7 @@
         "KEY_LINEA_R2_TIEMPO1": 26,
         "KEY_LINEA_R2_TIEMPO2": 27,
         "KEY_PARADAS": 31,
+        "KEY_PARADA_CERCANA": 33,
         "KEY_TIPO": 30
     },
     "capabilities": [

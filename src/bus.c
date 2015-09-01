@@ -56,7 +56,8 @@ enum {
   KEY_LINEA_R2_TIEMPO2 = 27,
 	KEY_PARADAS = 31,
 	KEY_LINEAS = 32,
-  KEY_TIPO = 30
+  KEY_TIPO = 30,
+  KEY_PARADA_CERCANA = 33
 };
 
 char* subString (const char* input, int offset, int len, char* dest)
@@ -124,13 +125,17 @@ static void in_received_handler(DictionaryIterator *iter, void *context)
   if (t_tipo->value->uint32 == 1)
     {  
     //APP_LOG(APP_LOG_LEVEL_DEBUG, "Recibo parada: %s", tiempo_retorno);
-
+    Tuple *t = dict_find(iter, KEY_PARADA_CERCANA);
+    // CAMBIAR ESTO POR UN INT
+    int parada_retorno;
+    parada_retorno = t->value->int32;
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Recibo parada: %i", parada_retorno);
 
     posicion=0;
     cargando = 0;
-    numero1= atoi(tiempo_retorno)/100;
-    numero2= (atoi(tiempo_retorno) % 100) /10;
-    numero3=(atoi(tiempo_retorno) % 10);
+    numero1= parada_retorno/100;
+    numero2= (parada_retorno % 100) /10;
+    numero3= parada_retorno % 10;
     layer_mark_dirty(marcador);
     pinta_datos();
     pinta_nombredeparada();
@@ -156,7 +161,6 @@ static void in_received_handler(DictionaryIterator *iter, void *context)
 
       dialog_message_window_push(numero_parada(), texto, 4);
       pinta_nombredeparada();
-      action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, play_bitmap);
     }
   }
 

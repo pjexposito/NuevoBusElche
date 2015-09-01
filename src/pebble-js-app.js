@@ -361,7 +361,7 @@ function distance(lat1, lon1, lat2, lon2)
 
 
 function localiza(){
-  navigator.geolocation.getCurrentPosition(showPosition, ErrorPosicion,{maximumAge:0, timeout:5000, enableHighAccuracy: true});  
+ navigator.geolocation.watchPosition(showPosition, ErrorPosicion,{maximumAge:60000, timeout:15000});  
 }
 
 
@@ -374,6 +374,7 @@ function ErrorPosicion()
 
 function showPosition(position) 
 	{
+    console.log("LAT: "+position.coords.latitude+" .LONG: "+position.coords.longitude);
 		ParadaCercana(position.coords.latitude, position.coords.longitude);		
 	}    
 
@@ -484,7 +485,8 @@ function ParadaCercana(lat, long)
         //console.log("El menor es la posición: " + menor);
         //console.log("La distancia es: " + distancia);
         //console.log("La parada es: " + numero_parada);
-    dict = {"KEY_TIPO": 1, "KEY_L1" : numero_parada.toString()};
+    console.log("La parada es "+numero_parada);
+    dict = {"KEY_TIPO": 1, "KEY_PARADA_CERCANA" : Number(numero_parada)};
 	Pebble.sendAppMessage(dict);
     
 	}
