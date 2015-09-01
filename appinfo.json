@@ -42,19 +42,29 @@
     "resources": {
         "media": [
             {
-                "file": "data/struct.bin",
-                "name": "RECURSO_BUS",
-                "type": "raw"
-            },
-            {
                 "file": "images/pulsar.png",
                 "name": "ICONO_PULSAR",
+                "type": "png-trans"
+            },
+            {
+                "file": "images/icono_inv.png",
+                "name": "IMAGEN_BUS_INV",
+                "type": "png"
+            },
+            {
+                "file": "images/abajo.png",
+                "name": "ICONO_ABAJO",
                 "type": "png-trans"
             },
             {
                 "file": "images/play.png",
                 "name": "ICONO_PLAY",
                 "type": "png-trans"
+            },
+            {
+                "file": "data/struct.bin",
+                "name": "RECURSO_BUS",
+                "type": "raw"
             },
             {
                 "file": "images/buscar.png",
@@ -65,16 +75,6 @@
                 "file": "images/arriba.png",
                 "name": "ICONO_ARRIBA",
                 "type": "png-trans"
-            },
-            {
-                "file": "images/abajo.png",
-                "name": "ICONO_ABAJO",
-                "type": "png-trans"
-            },
-            {
-                "file": "images/icono_inv.png",
-                "name": "IMAGEN_BUS_INV",
-                "type": "png"
             }
         ]
     },
