@@ -96,25 +96,23 @@ void dialog_message_window_push(int parada, char lineas[200], int total_lineas) 
     i_parada = parada;
     i_total_lineas = total_lineas;
     memset(&i_lineas[0], 0, sizeof(i_lineas));
-    memset(&string_parada[0], 0, sizeof(string_parada));
+    memset(&string_parada_total[0], 0, sizeof(string_parada_total));
+    memset(&string_parada_total2[0], 0, sizeof(string_parada_total2));
 
     for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
       {
         if ((valores_parada[v].tiempo1==98) && (valores_parada[v].tiempo2==98))
           {
-            memset(&string_parada_total[0], 0, sizeof(string_parada_total));
             snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: Sin autobuses.\n", v+65);
             strcat(i_lineas, string_parada_total); 
           }        
-        else if ((valores_parada[v].tiempo1!=0) && (valores_parada[v].tiempo2!=0))
+        else if (valores_parada[v].tiempo2+valores_parada[v].tiempo1!=0)
           {
-          memset(&string_parada_total[0], 0, sizeof(string_parada_total));
           snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: %i", v+65, valores_parada[v].tiempo1);
-          //APP_LOG(APP_LOG_LEVEL_DEBUG, "Para parada %c, tiempo1 vale %i y tiempo2, vale %i", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
+          APP_LOG(APP_LOG_LEVEL_DEBUG, "Para parada %c, tiempo1 vale %i y tiempo2, vale %i", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
           strcat(i_lineas, string_parada_total);
           if (valores_parada[v].tiempo2>0)
             {
-            memset(&string_parada_total2[0], 0, sizeof(string_parada_total2));
             snprintf(string_parada_total2, sizeof(string_parada_total2), " y %i", valores_parada[v].tiempo2);
             strcat(i_lineas, string_parada_total2);
             APP_LOG(APP_LOG_LEVEL_DEBUG, "Añado %s", string_parada_total2);

@@ -42,6 +42,11 @@
     "resources": {
         "media": [
             {
+                "file": "data/struct.bin",
+                "name": "RECURSO_BUS",
+                "type": "raw"
+            },
+            {
                 "file": "images/pulsar.png",
                 "name": "ICONO_PULSAR",
                 "type": "png-trans"
@@ -70,11 +75,6 @@
                 "file": "images/icono_inv.png",
                 "name": "IMAGEN_BUS_INV",
                 "type": "png"
-            },
-            {
-                "file": "data/struct.bin",
-                "name": "RECURSO_BUS",
-                "type": "raw"
             }
         ]
     },

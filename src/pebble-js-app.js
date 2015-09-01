@@ -529,7 +529,7 @@ function comprueba_envio(linea, lineas, tiempo1, tiempo2)
       {
         dict_nuevo = {
           "KEY_TIPO": 0,
-          "KEY_LINEA_A_TIEMPO1": Number(valores_tiempo[0][1]), "KEY_LINEA_A_TIEMPO2": Number(valores_tiempo[0][1]),  
+          "KEY_LINEA_A_TIEMPO1": Number(valores_tiempo[0][0]), "KEY_LINEA_A_TIEMPO2": Number(valores_tiempo[0][1]),  
           "KEY_LINEA_B_TIEMPO1": Number(valores_tiempo[1][0]), "KEY_LINEA_B_TIEMPO2": Number(valores_tiempo[1][1]),  
           "KEY_LINEA_C_TIEMPO1": Number(valores_tiempo[2][0]), "KEY_LINEA_C_TIEMPO2": Number(valores_tiempo[2][1]),  
           "KEY_LINEA_D_TIEMPO1": Number(valores_tiempo[3][0]), "KEY_LINEA_D_TIEMPO2": Number(valores_tiempo[3][1]),  
