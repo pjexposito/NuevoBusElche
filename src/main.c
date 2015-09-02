@@ -2,6 +2,7 @@
 #include "config.h"
 #include "busdb.h"
 #include "bus.h"
+#include "red.h"
   
 #define NUM_MENU_SECTIONS 2
 #define NUM_FIRST_MENU_ITEMS 2
@@ -171,7 +172,8 @@ static void window_unload(Window *window) {
 
 int main(void) {
   window = window_create();
-	app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());		
+  init_network();
+	//app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());		
   window_set_window_handlers(window, (WindowHandlers) {
     .load = window_load,
     .unload = window_unload,

@@ -24,41 +24,7 @@ GBitmap *arriba_bitmap, *abajo_bitmap, *pulsar_bitmap, *play_bitmap, *buscar_bit
 char texto[1024], tiempo1[100], tiempo2[100], tiempo_retorno[100];
 static int numero1, numero2, numero3, posicion=0, cargando=0, i_buscar;
 
-// Asignación para recibir datos
-enum {
-  KEY_LINEA_A_TIEMPO1 = 0,
-  KEY_LINEA_A_TIEMPO2 = 1,
-  KEY_LINEA_B_TIEMPO1 = 2,
-  KEY_LINEA_B_TIEMPO2 = 3,
-  KEY_LINEA_C_TIEMPO1 = 4,
-  KEY_LINEA_C_TIEMPO2 = 5,
-  KEY_LINEA_D_TIEMPO1 = 6,
-  KEY_LINEA_D_TIEMPO2 = 7,
-  KEY_LINEA_E_TIEMPO1 = 8,
-  KEY_LINEA_E_TIEMPO2 = 9,
-  KEY_LINEA_F_TIEMPO1 = 10,
-  KEY_LINEA_F_TIEMPO2 = 11,
-  KEY_LINEA_G_TIEMPO1 = 12,
-  KEY_LINEA_G_TIEMPO2 = 13,
-  KEY_LINEA_H_TIEMPO1 = 14,
-  KEY_LINEA_H_TIEMPO2 = 15,
-  KEY_LINEA_I_TIEMPO1 = 16,
-  KEY_LINEA_I_TIEMPO2 = 17,
-  KEY_LINEA_J_TIEMPO1 = 18,
-  KEY_LINEA_J_TIEMPO2 = 19,
-  KEY_LINEA_K_TIEMPO1 = 20,
-  KEY_LINEA_K_TIEMPO2 = 21,
-  KEY_LINEA_L_TIEMPO1 = 22,
-  KEY_LINEA_L_TIEMPO2 = 23,
-  KEY_LINEA_R1_TIEMPO1 = 24,
-  KEY_LINEA_R1_TIEMPO2 = 25,
-  KEY_LINEA_R2_TIEMPO1 = 26,
-  KEY_LINEA_R2_TIEMPO2 = 27,
-	KEY_PARADAS = 31,
-	KEY_LINEAS = 32,
-  KEY_TIPO = 30,
-  KEY_PARADA_CERCANA = 33
-};
+
 
 char* subString (const char* input, int offset, int len, char* dest)
 {
@@ -159,7 +125,7 @@ static void in_received_handler(DictionaryIterator *iter, void *context)
       vibes_short_pulse();
       //dialog_message_window_push(numero_parada(), devuelve_lineasxparada(numero_parada()));
 
-      dialog_message_window_push(numero_parada(), texto, 4);
+      dialog_message_window_push(numero_parada());
       pinta_nombredeparada();
     }
   }
@@ -281,7 +247,8 @@ void select_click_handler(ClickRecognizerRef recognizer, void *context)
       }
     else
       {
-        envia_peticion();
+        //envia_peticion();
+        dialog_message_window_push(numero_parada());
       }
       break;    
     
@@ -450,7 +417,7 @@ void carga_paradas(int n1, int fav, int buscar)
   #ifdef PBL_SDK_2
     window_set_fullscreen(window, true);
   #endif
-	app_message_register_inbox_received(in_received_handler);					 
+	//app_message_register_inbox_received(in_received_handler);					 
 	window_set_window_handlers(window, (WindowHandlers) handlers);
   if (fav==1)
     posicion=2;
