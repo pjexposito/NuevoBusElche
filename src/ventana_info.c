@@ -41,7 +41,7 @@ static void window_load(Window *window) {
   GRect bounds = layer_get_frame(window_layer);
   GRect max_text_bounds = GRect(0, 0, 120, 2000);
   s_label_layer = text_layer_create(max_text_bounds);
-  text_layer_set_text(s_label_layer, i_lineas);
+  text_layer_set_text(s_label_layer, "Cargando...");
   text_layer_set_text_color(s_label_layer, COLOR_TEXTO_CUERPO);  
   text_layer_set_background_color(s_label_layer, GColorClear);
   if (i_total_lineas> 3)
@@ -76,7 +76,7 @@ static void window_load(Window *window) {
   bitmap_layer_set_bitmap(s_icon_layer, s_icon_bitmap);
   layer_add_child(window_layer, bitmap_layer_get_layer(s_icon_layer));
   // FIN DE LA CAPA
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "Termina de cargar la capa");
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Termina de cargar la capa");
 
 
       
@@ -85,18 +85,22 @@ static void window_load(Window *window) {
 void pinta_texto()
   {
     memset(&i_lineas[0], 0, sizeof(i_lineas));
-    memset(&string_parada_total[0], 0, sizeof(string_parada_total));
-    memset(&string_parada_total2[0], 0, sizeof(string_parada_total2));
+    int total_lineas = 0;
+    //strcpy(i_lineas,"");
 
     for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
       {
+        memset(&string_parada_total[0], 0, sizeof(string_parada_total));
+        memset(&string_parada_total2[0], 0, sizeof(string_parada_total2));
         if ((valores_parada[v].tiempo1==98) && (valores_parada[v].tiempo2==98))
           {
+            total_lineas++;
             snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: Sin autobuses.\n", v+65);
             strcat(i_lineas, string_parada_total); 
           }        
         else if (valores_parada[v].tiempo2+valores_parada[v].tiempo1!=0)
           {
+          total_lineas++;
           snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: %i", v+65, valores_parada[v].tiempo1);
           APP_LOG(APP_LOG_LEVEL_DEBUG, "Para parada %c, tiempo1 vale %i y tiempo2, vale %i", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
           strcat(i_lineas, string_parada_total);
@@ -110,7 +114,20 @@ void pinta_texto()
           }
 
       }
+    Layer *window_layer = window_get_root_layer(s_main_window);
+  if (total_lineas> 3)
+    text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
+  else
+    text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28));
+
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "ilineas es %s", i_lineas);
+
   text_layer_set_text(s_label_layer, i_lineas);
+    text_layer_set_size(s_label_layer, GSize(148,400));
+
+  scroll_layer_set_content_size(s_scroll_layer, GSize(148, 400 + 4));
+
+  layer_mark_dirty(window_layer);
 
 }
 
@@ -127,37 +144,8 @@ static void window_unload(Window *window) {
 
 void dialog_message_window_push(int parada) {
   if(!s_main_window) {
-    request_weather();
-    i_parada = parada;
-    memset(&i_lineas[0], 0, sizeof(i_lineas));
-    memset(&string_parada_total[0], 0, sizeof(string_parada_total));
-    memset(&string_parada_total2[0], 0, sizeof(string_parada_total2));
-
-    for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
-      {
-        if ((valores_parada[v].tiempo1==98) && (valores_parada[v].tiempo2==98))
-          {
-            snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: Sin autobuses.\n", v+65);
-            strcat(i_lineas, string_parada_total); 
-          }        
-        else if (valores_parada[v].tiempo2+valores_parada[v].tiempo1!=0)
-          {
-          snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: %i", v+65, valores_parada[v].tiempo1);
-          APP_LOG(APP_LOG_LEVEL_DEBUG, "Para parada %c, tiempo1 vale %i y tiempo2, vale %i", v+65, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
-          strcat(i_lineas, string_parada_total);
-          if (valores_parada[v].tiempo2>0)
-            {
-            snprintf(string_parada_total2, sizeof(string_parada_total2), " y %i", valores_parada[v].tiempo2);
-            strcat(i_lineas, string_parada_total2);
-            APP_LOG(APP_LOG_LEVEL_DEBUG, "Añado %s", string_parada_total2);
-            }
-            strcat(i_lineas, "\n");
-          }
-
-      }
-    //strcat(i_lineas, lineas);
+    request_weather(parada);
     snprintf(string_parada, sizeof(string_parada), "Parada %d", parada);
-    //APP_LOG(APP_LOG_LEVEL_DEBUG, "Total: %s", i_lineas);
 
     s_main_window = window_create();
     window_set_background_color(s_main_window, COLOR_CUERPO);

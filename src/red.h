@@ -42,4 +42,4 @@ enum {
 void init_network();
 void close_network();
 
-void request_weather();
+void request_weather(int parada);

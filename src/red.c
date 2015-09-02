@@ -18,13 +18,13 @@ static void appmsg_in_received(DictionaryIterator *received, void *context) {
         valores_parada[v].tiempo2 = t_tiempo2->value->int8;
       }
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Terminado.");
-   pinta_texto();
 
-      for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
+    for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
         {
-            APP_LOG(APP_LOG_LEVEL_DEBUG, "En parada %i, t1 es %i y t2 es %i", v, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
+          APP_LOG(APP_LOG_LEVEL_DEBUG, "En parada %i, t1 es %i y t2 es %i", v, valores_parada[v].tiempo1, valores_parada[v].tiempo2);
 
-      }
+        }
+   pinta_texto();
 
 
 }
@@ -56,9 +56,8 @@ void close_network()
   app_message_deregister_callbacks();
 }
 
-void request_weather()
+void request_weather(int parada)
 {
-  int parada = 177;
   DictionaryIterator *iter;
   app_message_outbox_begin(&iter);
     dict_write_int16(iter, KEY_TIPO, 0);    

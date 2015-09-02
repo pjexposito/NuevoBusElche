@@ -247,6 +247,8 @@ void select_click_handler(ClickRecognizerRef recognizer, void *context)
       }
     else
       {
+            posicion=0;
+      layer_mark_dirty(marcador);
         //envia_peticion();
         dialog_message_window_push(numero_parada());
       }
