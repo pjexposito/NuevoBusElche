@@ -17,50 +17,43 @@
   
   
 static Window *s_main_window;
-static TextLayer *s_label_layer, *s_titulo_layer;
-static ScrollLayer *s_scroll_layer;
+static TextLayer *capa_texto_para_scroll, *s_titulo_layer;
+static ScrollLayer *capa_scroll;
+Layer *window_layer;
 
 static BitmapLayer *s_icon_layer, *s_fondo_layer;
-int i_parada, i_total_lineas;
-char i_lineas[300], string_parada[11], string_parada_total[30], string_parada_total2[15];
+int parada_global, i_total_lineas;
+char i_lineas[400], string_parada[11], string_parada_total[30], string_parada_total2[15];
 
 static GBitmap *s_icon_bitmap;
 
-static void window_load(Window *window) {
-  Layer *window_layer = window_get_root_layer(window);
 
+static void window_load(Window *window) {
   s_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGEN_BUS_INV);
   s_fondo_layer = bitmap_layer_create(GRect(0, 0, 144, 40));
   bitmap_layer_set_background_color(s_fondo_layer, COLOR_CABECERA);
   layer_add_child(window_layer, bitmap_layer_get_layer(s_fondo_layer));
 
 
-
-  s_scroll_layer = scroll_layer_create(GRect(10, 10 + 28 + 5, 124, 168 - (10 + 28 + 10)));
-  scroll_layer_set_click_config_onto_window(s_scroll_layer, window);
+  // CAPA SCROLL
   GRect bounds = layer_get_frame(window_layer);
-  GRect max_text_bounds = GRect(0, 0, 120, 2000);
-  s_label_layer = text_layer_create(max_text_bounds);
-  text_layer_set_text(s_label_layer, "Cargando...");
-  text_layer_set_text_color(s_label_layer, COLOR_TEXTO_CUERPO);  
-  text_layer_set_background_color(s_label_layer, GColorClear);
-  if (i_total_lineas> 3)
-    text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
-  else
-    text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28));
-    
-  //layer_add_child(window_layer, text_layer_get_layer(s_label_layer));
-  
-  
-  
-    // Trim text layer and scroll content to fit text box
-  GSize max_size = text_layer_get_content_size(s_label_layer);
-  text_layer_set_size(s_label_layer, max_size);
-  scroll_layer_set_content_size(s_scroll_layer, GSize(bounds.size.w, max_size.h + 4));
-  scroll_layer_set_shadow_hidden(s_scroll_layer, true);
-  scroll_layer_add_child(s_scroll_layer, text_layer_get_layer(s_label_layer));
-  layer_add_child(window_layer, scroll_layer_get_layer(s_scroll_layer));
+  capa_scroll = scroll_layer_create(GRect(10, 10 + 28 + 5, 124, 168 - (10 + 28 + 10)));
+  scroll_layer_set_click_config_onto_window(capa_scroll, window);
+  capa_texto_para_scroll = text_layer_create((GRect) { .origin = { 0, 0 }, .size = { bounds.size.w, 2000} });
+  text_layer_set_font(capa_texto_para_scroll, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
+  text_layer_set_text_color(capa_texto_para_scroll, COLOR_TEXTO_CUERPO);  
+    scroll_layer_set_shadow_hidden(capa_scroll, true);
 
+  text_layer_set_background_color(capa_texto_para_scroll, GColorClear);
+  text_layer_set_text(capa_texto_para_scroll, "Cargando...");
+  GSize content_size = GSize(120,30); // ESE 2000 es el importante. Indica si habrá o no scroll
+  text_layer_set_size(capa_texto_para_scroll, content_size);
+  scroll_layer_set_content_size(capa_scroll, GSize(140, content_size.h));
+  scroll_layer_add_child(capa_scroll, text_layer_get_layer(capa_texto_para_scroll));
+  layer_add_child(window_get_root_layer(window), scroll_layer_get_layer(capa_scroll)); 
+  
+
+  
   // CAPA DE LA PARADA
   s_titulo_layer = text_layer_create(GRect(38, 0 , 101, 40));
   text_layer_set_text(s_titulo_layer, string_parada);
@@ -77,13 +70,23 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, bitmap_layer_get_layer(s_icon_layer));
   // FIN DE LA CAPA
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Termina de cargar la capa");
+  //
 
 
       
 }
 
+void sacudida (AccelAxisType axis, int32_t direction) {
+  scroll_layer_set_content_offset(capa_scroll, GPointZero, false);
+  text_layer_set_text(capa_texto_para_scroll, "Solicitando nuevos datos...");
+  layer_mark_dirty(window_layer);
+  request_weather(parada_global);
+}
+
 void pinta_texto()
   {
+        vibes_short_pulse();
+
     memset(&i_lineas[0], 0, sizeof(i_lineas));
     int total_lineas = 0;
     //strcpy(i_lineas,"");
@@ -114,29 +117,27 @@ void pinta_texto()
           }
 
       }
-    Layer *window_layer = window_get_root_layer(s_main_window);
+  
   if (total_lineas> 3)
-    text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
+    text_layer_set_font(capa_texto_para_scroll, fonts_get_system_font(FONT_KEY_GOTHIC_24));
   else
-    text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28));
+    text_layer_set_font(capa_texto_para_scroll, fonts_get_system_font(FONT_KEY_GOTHIC_28));
 
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "ilineas es %s", i_lineas);
-
-  text_layer_set_text(s_label_layer, i_lineas);
-    text_layer_set_size(s_label_layer, GSize(148,400));
-
-  scroll_layer_set_content_size(s_scroll_layer, GSize(148, 400 + 4));
-
+        text_layer_set_text(capa_texto_para_scroll, i_lineas);
+  GSize content_size = GSize(120,50*total_lineas); // 
+  text_layer_set_size(capa_texto_para_scroll, GSize(140, content_size.h + 14));
+  scroll_layer_set_content_size(capa_scroll, GSize(140, content_size.h));
   layer_mark_dirty(window_layer);
 
 }
 
 static void window_unload(Window *window) {
-  text_layer_destroy(s_label_layer);
+  text_layer_destroy(capa_texto_para_scroll);
   text_layer_destroy(s_titulo_layer);
 
   bitmap_layer_destroy(s_icon_layer);
   gbitmap_destroy(s_icon_bitmap);
+  accel_tap_service_unsubscribe();
 
   window_destroy(window);
   s_main_window = NULL;
@@ -144,10 +145,13 @@ static void window_unload(Window *window) {
 
 void dialog_message_window_push(int parada) {
   if(!s_main_window) {
-    request_weather(parada);
+    parada_global = parada;
+    request_weather(parada_global);
     snprintf(string_parada, sizeof(string_parada), "Parada %d", parada);
 
     s_main_window = window_create();
+    window_layer = window_get_root_layer(s_main_window);
+    accel_tap_service_subscribe (sacudida);
     window_set_background_color(s_main_window, COLOR_CUERPO);
     #ifdef PBL_SDK_2
       window_set_fullscreen(s_main_window, true);
