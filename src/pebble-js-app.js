@@ -426,20 +426,18 @@ function BuscaParadas_soap(lineas, parada,linea)
         if (xmlhttp.status == 200) 
           {
             console.log("Ok, status 200.");
-          if (xmlhttp.responseXML.getElementsByTagName("GetPasoParadaResult")[0].getElementsByTagName("PasoParada")[0])
+            console.log(typeof(xmlhttp.responseXML) == "undefined");
+
+          if (typeof(xmlhttp.responseXML) == "undefined")
+              {
+              t1 = "95";
+              t2 = "95";
+              // No se puede ejecutar la búsqueda debido a "access-control-allow-origin". Hay que buscar una alternativa.
+              }
+          else if (xmlhttp.responseXML.getElementsByTagName("GetPasoParadaResult")[0].getElementsByTagName("PasoParada")[0])
             {
               t1 = xmlhttp.responseXML.getElementsByTagName("GetPasoParadaResult")[0].getElementsByTagName("PasoParada")[0].getElementsByTagName("e1")[0].getElementsByTagName("minutos")[0].textContent;
               t2 = xmlhttp.responseXML.getElementsByTagName("GetPasoParadaResult")[0].getElementsByTagName("PasoParada")[0].getElementsByTagName("e2")[0].getElementsByTagName("minutos")[0].textContent;
-            }
-          else
-            {
-              t1 = "98";
-              t2 = "98";
-            }
-          if (t1 > -1)
-            {
-              if (t1/10 < 1 && t1 > -1) t1 = "0"+t1;
-              if (t2/10 < 1 && t2 > -1) t2 = "0"+t2;
             }
           else
             {

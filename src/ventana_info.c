@@ -100,7 +100,13 @@ void pinta_texto()
             total_lineas++;
             snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: Sin autobuses.\n", v+65);
             strcat(i_lineas, string_parada_total); 
-          }        
+          }   
+        if ((valores_parada[v].tiempo1==95) && (valores_parada[v].tiempo2==95))
+          {
+            total_lineas++;
+            snprintf(string_parada_total, sizeof(string_parada_total), "Error de servidor.\n");
+            strcat(i_lineas, string_parada_total); 
+          }       
         else if (valores_parada[v].tiempo2+valores_parada[v].tiempo1!=0)
           {
           total_lineas++;
@@ -113,7 +119,7 @@ void pinta_texto()
             strcat(i_lineas, string_parada_total2);
             APP_LOG(APP_LOG_LEVEL_DEBUG, "Añado %s", string_parada_total2);
             }
-            strcat(i_lineas, "\n");
+            strcat(i_lineas, " minutos.\n");
           }
 
       }

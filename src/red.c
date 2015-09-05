@@ -8,7 +8,29 @@ static void appmsg_in_received(DictionaryIterator *received, void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "In received.");
 
   (void) context;	
+  Tuple *t_tipo = dict_find(received, KEY_TIPO);
 
+  if (t_tipo->value->uint32 == 1)
+    {  
+    //APP_LOG(APP_LOG_LEVEL_DEBUG, "Recibo parada: %s", tiempo_retorno);
+    Tuple *t = dict_find(received, KEY_PARADA_CERCANA);
+    // CAMBIAR ESTO POR UN INT
+    int parada_retorno;
+    parada_retorno = t->value->int32;
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Recibo parada: %i", parada_retorno);
+/*
+    posicion=0;
+    cargando = 0;
+    numero1= parada_retorno/100;
+    numero2= (parada_retorno % 100) /10;
+    numero3= parada_retorno % 10;
+    layer_mark_dirty(marcador);
+    pinta_datos();
+    pinta_nombredeparada();
+*/
+  }
+  else
+  {  
       for (int v=0;v<TOTAL_KEY_PARADAS+1;v++)
       {
         Tuple *t_tiempo1 = dict_find(received, v*2);
@@ -26,7 +48,7 @@ static void appmsg_in_received(DictionaryIterator *received, void *context) {
         }
    pinta_texto();
 
-
+  }
 }
 
 static void appmsg_in_dropped(AppMessageResult reason, void *context) {
