@@ -70,7 +70,7 @@ void close_network()
   app_message_deregister_callbacks();
 }
 
-void request_weather(int parada)
+void tiempo_parada(int parada)
 {
   DictionaryIterator *iter;
   app_message_outbox_begin(&iter);

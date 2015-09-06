@@ -80,7 +80,7 @@ void sacudida (AccelAxisType axis, int32_t direction) {
   scroll_layer_set_content_offset(capa_scroll, GPointZero, false);
   text_layer_set_text(capa_texto_para_scroll, "Solicitando nuevos datos...");
   layer_mark_dirty(window_layer);
-  request_weather(parada_global);
+  tiempo_parada(parada_global);
 }
 
 void pinta_texto()
@@ -152,7 +152,7 @@ static void window_unload(Window *window) {
 void dialog_message_window_push(int parada) {
   if(!s_main_window) {
     parada_global = parada;
-    request_weather(parada_global);
+    tiempo_parada(parada_global);
     snprintf(string_parada, sizeof(string_parada), "Parada %d", parada);
 
     s_main_window = window_create();

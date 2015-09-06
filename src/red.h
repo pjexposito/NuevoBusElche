@@ -42,5 +42,5 @@ enum {
 void init_network();
 void close_network();
 
-void request_weather(int parada);
+void tiempo_parada(int parada);
 void busca_parada();
