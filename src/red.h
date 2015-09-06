@@ -43,3 +43,4 @@ void init_network();
 void close_network();
 
 void request_weather(int parada);
+void busca_parada();

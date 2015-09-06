@@ -95,19 +95,19 @@ void pinta_texto()
       {
         memset(&string_parada_total[0], 0, sizeof(string_parada_total));
         memset(&string_parada_total2[0], 0, sizeof(string_parada_total2));
-        if ((valores_parada[v].tiempo1==98) && (valores_parada[v].tiempo2==98))
+        if (valores_parada[v].tiempo1==98)
           {
             total_lineas++;
             snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: Sin autobuses.\n", v+65);
             strcat(i_lineas, string_parada_total); 
           }   
-        if ((valores_parada[v].tiempo1==95) && (valores_parada[v].tiempo2==95))
+        else if (valores_parada[v].tiempo1==95)
           {
             total_lineas++;
             snprintf(string_parada_total, sizeof(string_parada_total), "Error de servidor.\n");
             strcat(i_lineas, string_parada_total); 
           }       
-        else if (valores_parada[v].tiempo2+valores_parada[v].tiempo1!=0)
+        else if (valores_parada[v].tiempo1+valores_parada[v].tiempo2!=0)
           {
           total_lineas++;
           snprintf(string_parada_total, sizeof(string_parada_total), "Parada %c: %i", v+65, valores_parada[v].tiempo1);
@@ -130,9 +130,9 @@ void pinta_texto()
     text_layer_set_font(capa_texto_para_scroll, fonts_get_system_font(FONT_KEY_GOTHIC_28));
 
         text_layer_set_text(capa_texto_para_scroll, i_lineas);
-  GSize content_size = GSize(120,50*total_lineas); // 
-  text_layer_set_size(capa_texto_para_scroll, GSize(140, content_size.h + 14));
-  scroll_layer_set_content_size(capa_scroll, GSize(140, content_size.h));
+  GSize content_size = GSize(115,50*total_lineas); // 
+  text_layer_set_size(capa_texto_para_scroll, GSize(130, content_size.h + 14));
+  scroll_layer_set_content_size(capa_scroll, GSize(130, content_size.h));
   layer_mark_dirty(window_layer);
 
 }

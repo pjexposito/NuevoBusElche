@@ -3,6 +3,7 @@
 #include "config.h"
 #include "busdb.h"
 #include "ventana_info.h"
+#include "bus.h"
 
 static void appmsg_in_received(DictionaryIterator *received, void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "In received.");
@@ -18,16 +19,7 @@ static void appmsg_in_received(DictionaryIterator *received, void *context) {
     int parada_retorno;
     parada_retorno = t->value->int32;
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Recibo parada: %i", parada_retorno);
-/*
-    posicion=0;
-    cargando = 0;
-    numero1= parada_retorno/100;
-    numero2= (parada_retorno % 100) /10;
-    numero3= parada_retorno % 10;
-    layer_mark_dirty(marcador);
-    pinta_datos();
-    pinta_nombredeparada();
-*/
+    pinta_parada_recibida(parada_retorno);
   }
   else
   {  
@@ -85,6 +77,16 @@ void request_weather(int parada)
     dict_write_int16(iter, KEY_TIPO, 0);    
     dict_write_int16(iter, KEY_PARADAS, parada);
     dict_write_cstring(iter, KEY_LINEAS, devuelve_datos_parada(parada,1));
+
+  app_message_outbox_send();
+}
+
+void busca_parada()
+{
+  DictionaryIterator *iter;
+  app_message_outbox_begin(&iter);
+    dict_write_int16(iter, KEY_TIPO, 1);    
+
 
   app_message_outbox_send();
 }

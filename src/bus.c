@@ -80,7 +80,7 @@ void pinta_nombredeparada()
 
 
 
-
+/*
 
 
 static void in_received_handler(DictionaryIterator *iter, void *context) 
@@ -179,11 +179,22 @@ void envia_peticion()
 
 
 
+*/
 
 
 
+void pinta_parada_recibida(int parada)
+  {
 
-
+    posicion=0;
+    cargando = 0;
+    numero1= parada/100;
+    numero2= (parada % 100) /10;
+    numero3= parada % 10;
+    layer_mark_dirty(marcador);
+    pinta_datos();
+    pinta_nombredeparada();
+}
 
 void up_click_handler(ClickRecognizerRef recognizer, void *context) 
 {
@@ -369,10 +380,10 @@ void window_load(Window *window)
   pinta_datos();
   pinta_nombredeparada();
   if (i_buscar==1)
-      busca_localizacion();
+      busca_parada();
   if (posicion==2)
     {
-    envia_peticion();
+      dialog_message_window_push(numero_parada());
   }
   
 }
